@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: football-predictor
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 1 --threads 4 --timeout 60 app:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: FOOTBALL_DATA_KEY
+        sync: false        # Render vous demandera la valeur : elle ne passe JAMAIS par GitHub
+      - key: APP_TZ
+        value: UTC
